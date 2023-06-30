@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <header>
+            <div class="container">
+                <h1 class="logo">Vishal's web page</h1>
+                <strong><nav>
+                    <u1 class="menu">
+                        <li><a herf="{{ url_for('Home') }}">Home</a></li>
+                        <li><a herf="{{ url_for('Asus') }}">Asus</a></li>
+                    </u1>
+                </nav></strong>
+                </div>
+        </header>
+        <div class="container">
+            {%block content%}
+            {%endblock%}
+        </div>
+    </body>
+</html>

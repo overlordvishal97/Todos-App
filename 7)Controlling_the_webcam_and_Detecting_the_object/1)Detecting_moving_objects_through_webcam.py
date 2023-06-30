@@ -1,0 +1,58 @@
+import cv2, time
+from cv2 import cvtColor
+
+first_frame=None
+video=cv2.VideoCapture(0)
+
+while True:
+    check, frame = video.read()    
+#'check' is a boolean type and frame is a numpy array.
+#you check it by printing them seprately.
+    #print(check)
+    #print(frame)
+#you can even make it to show in gray.
+    gray=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
+    gray=cv2.GaussianBlur(gray,(21,21),0)
+    #this blurs the image and smooths the image and decreases noise and increases accuracy.
+    
+    if first_frame is None:
+        first_frame=gray
+        continue
+    
+    delta_frame=cv2.absdiff(first_frame,gray)
+    
+    thresh_frame=cv2.threshold(delta_frame,30, 255, cv2.THRESH_BINARY)[1]
+    
+    thresh_frame=cv2.dilate(thresh_frame, None, iterations=2)
+    
+    (cnts,_) =cv2.findContours(thresh_frame.copy(),cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+    
+    for contour in cnts:
+        if cv2.contourArea(contour) < 1000:
+            continue
+        (x, y, w, h)=cv2.boundingRect(contour)
+        cv2.rectangle(frame, (x, y), (x+w, y+h), (0,255,0), 3)
+    
+#you just have to replace the frame in imshow for it to show the grey image.
+    
+    #you just have to comment out the time.sleep for it to turn into video.
+#makes the video to stop running for the required amount of time.
+    cv2.imshow("Grey Frame",gray)
+    cv2.imshow("Delta Frame",delta_frame)
+    cv2.imshow("Threshold Frame",thresh_frame)
+    cv2.imshow("color Frame",frame)
+#this shows the video which being recorded.
+    key=cv2.waitKey(1)
+    
+    if key == ord('q'):
+        break
+    #if you press 'q' key when the code is running then it will break the code.
+#2000 milli seconds which is 2 seconds.
+#0 in waitkey means it will drop with any key.
+#this gives the option to exit all windows with a press of a button.
+#how many frames or iterations are being generated. can be known using this method.
+video.release()
+cv2.destroyAllWindows() 
+#closes the webcam or cancels the video.
+# print(delta_frame)
+# print(gray)
