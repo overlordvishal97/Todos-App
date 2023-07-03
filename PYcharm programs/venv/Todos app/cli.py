@@ -5,7 +5,7 @@ import functions
 import time
 
 now = time.strftime("%b %d, %Y %H:%M:%S")
-Print("It is", now)
+print("It is", now)
 
 
 while True:
