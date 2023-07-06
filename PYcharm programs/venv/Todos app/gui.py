@@ -1,6 +1,11 @@
 import functions
 import PySimpleGUI as sg
 import time
+import os
+
+if not os.path.exists("todos.txt"):
+    with open("todos.txt","w") as file:
+        pass
 
 # changes the theme of the window
 sg.theme("Black")
@@ -19,7 +24,7 @@ window = sg.Window('My Todo App',
                    layout=[[clock],
                            [label],
                            [input_box, add_button],
-                           [list_box, edit_button, complete_button],
+                           [list_box, edit_button , complete_button],
                            [exit_button]],
                    font=('Helvetica', 15))
 while True:
@@ -63,3 +68,9 @@ while True:
             break
 
 window.close()
+
+#to create a standalone executable file first you need to install pyinstaller
+#and set the files as the primary directory using this command
+# (set-executionplicy remotesigned -scope currentuser)
+# then use this command in the terminal (pyinstaller --onefile --windowed --clean filename.py)
+#the --clean is used to clean the previously created executable.
