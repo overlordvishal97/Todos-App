@@ -1,6 +1,5 @@
-#1st method
+
 #from functions import get_todos, write_todos
-#2nd method.
 import functions
 import time
 
